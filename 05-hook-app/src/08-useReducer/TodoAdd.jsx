@@ -24,12 +24,12 @@ export const TodoAdd = ({ onNewTodo }) => {
     return (
         <form onSubmit={ onFormSubmit }>
             <input 
-            type="text" 
-            placeholder="What i have to do?" 
-            className="form-control" 
-            name="description"
-            value={ description }
-            onChange={ onInputChange }
+                type="text" 
+                placeholder="What i have to do?" 
+                className="form-control" 
+                name="description"
+                value={ description }
+                onChange={ onInputChange }
             />
 
             <button type="submit" className="btn btn-outline-primary mt-3"> Add </button>
