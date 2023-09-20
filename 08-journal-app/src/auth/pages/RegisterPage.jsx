@@ -2,11 +2,14 @@ import { Link as RouterLink } from "react-router-dom";
 import { Button, Grid, Link, TextField, Typography } from "@mui/material";
 import { AuthLayout } from "../layout/AuthLayout";
 import { useForm } from "../../hooks/useForm";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { startCreatingUserWithEmailPassword } from "../../store/auth/thunks";
 
 const formData = {
-  email: 'fer@gmail.com',
-  password: '1234',
-  displayName: 'Fernando Encalada'
+  email: '',
+  password: '',
+  displayName: ''
 }
 
 const formValidations = {
@@ -17,6 +20,10 @@ const formValidations = {
 
 export const RegisterPage = () => {
 
+  const dispatch = useDispatch();
+
+  const [ formSubmitted, setFormSubmitted ] = useState(false);
+
   const { 
     displayName, email, password, onInputChange, formState,
     isFormValid, displayNameValid, emailValid, passwordValid
@@ -26,7 +33,10 @@ export const RegisterPage = () => {
 
   const onSubmit = ( event ) => {
     event.preventDefault();
-    console.log(formState);
+    setFormSubmitted(true);
+
+    if( !isFormValid ) return;
+    dispatch(startCreatingUserWithEmailPassword(formState));
   }
   return (
     <AuthLayout title="Register">
@@ -41,6 +51,8 @@ export const RegisterPage = () => {
               name="displayName"
               value={displayName}
               onChange={ onInputChange }
+              error={ !!displayNameValid && formSubmitted }
+              helperText={ displayNameValid }
             />
           </Grid>
           <Grid item xs={12} sx={{ mt: 2 }}>
@@ -52,6 +64,8 @@ export const RegisterPage = () => {
               name="email"
               value={email}
               onChange={ onInputChange }
+              error={ !!emailValid && formSubmitted }
+              helperText={ emailValid }
             />
           </Grid>
           <Grid item xs={12} sx={{ mt: 2 }}>
@@ -63,6 +77,8 @@ export const RegisterPage = () => {
               name="password"
               value={password}
               onChange={ onInputChange }
+              error={ !!passwordValid && formSubmitted }
+              helperText={ passwordValid }
             />
           </Grid>
 
