@@ -3,7 +3,7 @@ import { Google } from "@mui/icons-material";
 import { Button, Grid, Link, TextField, Typography } from "@mui/material";
 import { AuthLayout } from "../layout/AuthLayout";
 import { useForm } from "../../hooks/useForm";
-import { checkingAuthentication, startGoogleSignIn } from "../../store/auth/thunks";
+import { checkingAuthentication, startGoogleSignIn, startLoginWithEmailAndPassword } from "../../store/auth/thunks";
 import { useDispatch, useSelector } from "react-redux";
 import { useMemo } from "react";
 
@@ -20,7 +20,7 @@ export const LoginPage = () => {
 
   const onSubmit = ( event ) => {
     event.preventDefault();
-    dispatch(checkingAuthentication( ))
+    dispatch( startLoginWithEmailAndPassword({ email, password}))
   }
 
   const onGoogleSignIn = () => {
